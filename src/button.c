@@ -2,18 +2,21 @@
  * @file button.c
  * @brief Interface Homme-Machine Projet Toueris 2 - Partie bouton poussoir
  */
+#include <util/atomic.h>
 #include "hmi.h"
 #include "button.h"
-#include "hmi-hirq.h"
+#include "hirq.h"
+#include <Toueris2Hmi.h>
 #include "config.h" // toujours en dernier
 
 /* constants ================================================================ */
 
+/* public variables ========================================================= */
+
 /* private variables ======================================================== */
 static xButMask xPrevButtons;
-
-/* public variables ========================================================= */
-xButMask xButtons;
+static xButMask xButtons;
+QUEUE_STATIC_DECLARE (xFiFo, CFG_BUT_FIFO_SIZE);
 
 /* private functions ======================================================== */
 
@@ -29,9 +32,13 @@ vButtonCheck (xButMask xBitMask, uint8_t ucButtonIndex) {
       /* Le bit est à 0, le bouton a été relaché */
       ucButtonIndex |= BUT_RELEASE;
     }
-    ATOMIC_BLOCK (ATOMIC_RESTORESTATE) {
+    if (!xQueueIsFull (&xFiFo)) {
+
+      ATOMIC_BLOCK (ATOMIC_RESTORESTATE) {
+
+        vQueuePush (&xFiFo, ucButtonIndex);
+      }
     }
-    //vTwiUsiSlaveWrite (ucButtonIndex); // bloque si buffer TX plein
   }
 }
 
@@ -43,6 +50,20 @@ vHmiButtonInit (void) {
 
   xPrevButtons = BUTTON_NO_BUTTON;
   vButInit();
+}
+
+// -----------------------------------------------------------------------------
+bool
+bHmiButtonAvailable (void) {
+
+  return ! xQueueIsEmpty (&xFiFo);
+}
+
+// -----------------------------------------------------------------------------
+size_t
+xHmiButtonRead (struct xQueue *pxDstQueue) {
+
+  return xQueuePushQueue (pxDstQueue, &xFiFo);
 }
 
 // -----------------------------------------------------------------------------
@@ -64,15 +85,15 @@ vHmiButtonTask (void) {
     vButtonCheck (BUTTON_BUTTON5, 5);
     xPrevButtons = xButtons;
   }
-  if (bTwiSlaveTxBufferEmpty()) {
-
-    // Désactive HIRQ si le buffer de transmission est vide
-    vHmiHirqClear();
-  }
-  else {
+  if (bHmiButtonAvailable()) {
 
     // Active HIRQ si le buffer de transmission contient des données
     vHmiHirqSet();
+  }
+  else {
+
+    // Désactive HIRQ si le buffer de transmission est vide
+    vHmiHirqClear();
   }
 }
 

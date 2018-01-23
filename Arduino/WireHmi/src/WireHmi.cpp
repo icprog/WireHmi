@@ -11,7 +11,7 @@
  * knowledge of the CeCILL license and that you accept its terms.
  *
  * @file
- * @brief
+ * @brief I2C Human2Machine Interface implementation
  */
 #include "WireHmi.h"
 
@@ -211,7 +211,7 @@ bool WireKeyboard::begin() {
 // -----------------------------------------------------------------------------
 bool WireKeyboard::available() {
   if (_hirq > 0) {
-    if (digitalRead (_hirq)) {
+    if (!digitalRead (_hirq)) {
       return false;
     }
   }

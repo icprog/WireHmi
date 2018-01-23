@@ -25,7 +25,7 @@
 #                   bug reports to the GCC project.
 
 # Nom du fichier cible (sans extension).
-TARGET = toueris2-hmi
+TARGET = toueris2-hmi-firmware
 
 # Chemin relatif du répertoire racine du projet de l'utilisateur
 PROJECT_TOPDIR = ..
@@ -94,7 +94,7 @@ DISABLE_DELETE_UNUSED_SECTIONS = OFF
 # Le chemin d'accès des fichiers sources systèmes a été ajouté au chemin de
 # recherche du compilateur, il n'est donc pas nécessaire de préciser le chemin
 # d'accès complet du fichier mais seulement le nom du projet (avrio, avrx, ...)
-SRC  = hmi.c main.c led.c
+SRC  = hmi.c main.c led.c button.c
 SRC += avrio/button.c avrio/twi.c avrio/queue.c avrio/eeprom.c avrio/crc.c avrio/led.c
 
 # Liste des fichiers source C++. (Les dépendances sont automatiquement générées.)

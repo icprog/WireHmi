@@ -34,12 +34,24 @@
       <VirtualDirectory Name="SlaveTest">
         <File Name="WireHmi/examples/SlaveTest/SlaveTest.ino"/>
       </VirtualDirectory>
+      <VirtualDirectory Name="BacklightTest">
+        <File Name="WireHmi/examples/BacklightTest/BacklightTest.ino"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="KeyboardTest">
+        <File Name="WireHmi/examples/KeyboardTest/KeyboardTest.ino"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="Toueris2Hmi">
+        <File Name="WireHmi/examples/Toueris2Hmi/Toueris2Hmi.ino"/>
+      </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="src">
       <File Name="WireHmi/src/WireHmi.h"/>
       <File Name="WireHmi/src/WireHmi.cpp"/>
       <File Name="WireHmi/src/Toueris2Hmi.h"/>
+      <File Name="WireHmi/src/Toueris2Hmi.cpp"/>
     </VirtualDirectory>
+    <File Name="WireHmi/keywords.txt"/>
+    <File Name="WireHmi/LICENSE"/>
   </VirtualDirectory>
   <Description/>
   <Dependencies/>

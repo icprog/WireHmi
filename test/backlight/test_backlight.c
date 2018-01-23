@@ -5,7 +5,7 @@
 #include <avrio/delay.h>
 #include <avrio/button.h>
 #include <stdio.h>
-#include "hmi-backlight.h"
+#include "backlight.h"
 /* main ===================================================================== */
 int
 main (void) {

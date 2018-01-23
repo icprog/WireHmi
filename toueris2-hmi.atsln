@@ -21,7 +21,7 @@ Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "test_task", "test\task\test
 EndProject
 Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "test_twi", "test\twi\test_twi.cproj", "{B1AED732-8021-4AE0-BCCD-4D1A292F5341}"
 EndProject
-Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "toueris2-hmi", "src\toueris2-hmi.cproj", "{6A5A1D82-5772-45FB-BBFA-2C6F17D683D3}"
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "toueris2-hmi-firmware", "src\toueris2-hmi-firmware.cproj", "{6A5A1D82-5772-45FB-BBFA-2C6F17D683D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

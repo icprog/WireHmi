@@ -8,9 +8,9 @@
 #include <avrio/delay.h>
 #include "hmi.h"
 #include "led.h"
-#include "hmi-backlight.h"
-#include "hmi-hirq.h"
-//#include "button.h"
+#include "backlight.h"
+#include "hirq.h"
+#include "button.h"
 #include <Toueris2Hmi.h>
 #include "config.h" // toujours en dernier
 
@@ -51,8 +51,6 @@ vHmiInit (void) {
     vHmiHirqSet(); // Active HIRQ pour indiquer que l'init est en cours
   }
 
-  //ucState = IDLE;
-
   if (iEepromLoadBlock (&xConfig, &xConfigEE, sizeof (xHmiConfig)) < 0) {
 
     // Si le contenu de xConfigEE est corrompu, réinitialiser avec les
@@ -61,11 +59,11 @@ vHmiInit (void) {
     vEepromSaveBlock (&xConfig, &xConfigEE, sizeof (xHmiConfig));
   }
 
-  //vHmiButtonInit();
+  vHmiButtonInit();
   vHmiBacklightInit();
 
   vTwiInit ();
-  vTwiSetDeviceAddress (IHM_ID << 1);
+  vTwiSetDeviceAddress (TOUERIS2_HMI_SLAVE_ADDR << 1);
 
   vHmiHirqClear();
   MCUSR |= _BV (WDRF); // Clear du bit Watchdog Reset Flag
@@ -77,7 +75,7 @@ vHmiInit (void) {
 void
 vHmiLoop (void) {
 
-  // vHmiButtonTask();
+  vHmiButtonTask();
   wdt_reset();
 }
 
@@ -102,58 +100,61 @@ eTwiSlaveRxCB (xQueue * pxRxPayload, eTwiStatus eStatus) {
       uint8_t value;
 
       // Adressage avec notre adresse esclave
-      if (xQueueLength (pxRxPayload) >= 1) {
+      if (xQueueIsEmpty (pxRxPayload)) {
 
-        /*
-         * Le premier octet reçu est l'adresse du registre auquel le
-         * maître souhaite accéder. Si la trame en écriture à une longeur de
-         * 1 octet, seul l'adresse du registre est modifiée. Ce sera
-         * généralement le cas, lors d'un accès "write word address; READ data"
-         * permettant au maître de spécifier l'adresse du registre qu'il
-         * souhaite lire avant de les lire.
-         */
-        ucBufferIdx = ucQueuePull (pxRxPayload);
+        return eError;
       }
 
-      while (! xQueueIsEmpty (pxRxPayload)) {
+      /*
+       * Le premier octet reçu est l'adresse du registre auquel le
+       * maître souhaite accéder. Si la trame en écriture à une longeur de
+       * 1 octet, seul l'adresse du registre est modifiée. Ce sera
+       * généralement le cas, lors d'un accès "write word address; READ data"
+       * permettant au maître de spécifier l'adresse du registre qu'il
+       * souhaite lire avant de les lire.
+       */
+      value = ucQueuePull (pxRxPayload);
+      if ( (value >= LED_REG) && (value <= BUT_REG)) {
 
-        value  = ucQueuePull (pxRxPayload);
-        switch (ucBufferIdx) {
+        ucBufferIdx = value;
+        while (! xQueueIsEmpty (pxRxPayload)) {
 
-          case LED_REG:
-            value &= (LED1 | LED2 | LED3);
-            if (value != ucI2cBuffer[ucBufferIdx]) {
+          value  = ucQueuePull (pxRxPayload);
+          switch (ucBufferIdx) {
 
-              vHmiLedToggleAll (value ^ ucI2cBuffer[ucBufferIdx]);
-              ucI2cBuffer[ucBufferIdx] = value;
-            }
-            break;
+            case LED_REG:
+              value &= (LED1 | LED2 | LED3);
+              if (value != ucI2cBuffer[ucBufferIdx]) {
 
-          case BACKLIGHT_REG:
-            if (value != ucI2cBuffer[ucBufferIdx]) {
-              vHmiBacklightSet (value);
-              ucI2cBuffer[ucBufferIdx] = value;
-            }
-            break;
+                vHmiLedToggleAll (value ^ ucI2cBuffer[ucBufferIdx]);
+                ucI2cBuffer[ucBufferIdx] = value;
+              }
+              break;
 
-          default:
-            break;
+            case BACKLIGHT_REG:
+              if (value != ucI2cBuffer[ucBufferIdx]) {
+                vHmiBacklightSet (value);
+                ucI2cBuffer[ucBufferIdx] = value;
+              }
+              break;
+
+            default:
+              break;
+          }
         }
+        return eError;
+      }
+      else {
 
-        ucBufferIdx++;
-        if (ucBufferIdx > sizeof (ucI2cBuffer)) {
-
-          ucBufferIdx = 0;
-        }
+        eError = TWI_ERROR_DATA_NACK;
       }
     }
-    return eError;
+    // Pas de break, normal !
 
     default:
-      vAssert (eStatus >= TWI_SUCCESS);
+      vQueueFlush (pxRxPayload);
       break;
   }
-  vQueueFlush (pxRxPayload);
   return eError;
 }
 
@@ -176,27 +177,27 @@ eTwiSlaveTxCB (xQueue * pxTxPayload, eTwiStatus eStatus) {
 
     case TWI_STATUS_TXBUFFER_EMPTY:
       // Le buffer de transmission est vide, il faut ajouter des octets
-      
+
       switch (ucBufferIdx) {
-        
+
         case LED_REG:
         case BACKLIGHT_REG:
-          vQueuePush (pxTxPayload, ucI2cBuffer[ucBufferIdx++]);
-          if (ucBufferIdx > sizeof (ucI2cBuffer)) {
+          vQueuePush (pxTxPayload, ucI2cBuffer[ucBufferIdx]);
+          break;
 
-            ucBufferIdx = 0;
+        case BUT_REG:
+          if (bHmiButtonAvailable()) {
+
+            xHmiButtonRead (pxTxPayload);
+          }
+          else {
+
+            vQueuePush (pxTxPayload, 0);
           }
           break;
-        
-        case BUT_REG:
-          // TODO: pile bouton
-          vQueuePush (pxTxPayload, 0);
-          // Aucune donnée à envoyer, on envoie 0x00
-          break;
-        
+
         default:
-          vQueuePush (pxTxPayload, 0);
-          break;
+          return TWI_ERROR_DATA_NACK;
       }
       break;
 

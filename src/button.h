@@ -7,12 +7,13 @@
 
 #include <avrio/defs.h>
 #include <avrio/button.h>
-
-/* constants ================================================================ */
+#include <avrio/queue.h>
 
 /* internal public functions ================================================ */
 void vHmiButtonInit(void);
 void vHmiButtonTask (void);
+bool bHmiButtonAvailable (void);
+size_t xHmiButtonRead (struct xQueue *pxDstQueue);
 
 /* ========================================================================== */
 #endif  /* _TOUERIS2_BUTTON_H_ not defined */

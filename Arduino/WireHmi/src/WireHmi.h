@@ -11,7 +11,7 @@
  * knowledge of the CeCILL license and that you accept its terms.
  *
  * @file
- * @brief
+ * @brief I2C Human2Machine Interface description
  */
 #ifndef __WIRE_HMI_H__
 #define __WIRE_HMI_H__
@@ -19,7 +19,7 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-// Slave Class
+// I2c Slave Class
 class WireSlave {
   public:
     WireSlave (byte slaveAddress);
@@ -41,7 +41,7 @@ class WireSlave {
     byte _address;
 };
 
-// Register Class
+// I2c Data Register Class
 class WireRegister {
   public:
     WireRegister (WireSlave * slave, byte regAddress);

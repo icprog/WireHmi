@@ -13,7 +13,12 @@
   <Project Name="test_backlight" Path="test/backlight/test_backlight.project" Active="No"/>
   <Project Name="test_twi" Path="test/twi/test_twi.project" Active="No"/>
   <Project Name="arduino" Path="Arduino/arduino.project" Active="No"/>
-  <Project Name="toueris2-hmi" Path="src/toueris2-hmi.project" Active="Yes"/>
+  <Project Name="toueris2-hmi-firmware" Path="src/toueris2-hmi-firmware.project" Active="Yes"/>
+  <Project Name="arduino" Path="Arduino/arduino.project" Active="No"/>
+  <Project Name="arduino" Path="Arduino/arduino.project" Active="No"/>
+  <Project Name="arduino" Path="Arduino/arduino.project" Active="No"/>
+  <Project Name="arduino" Path="Arduino/arduino.project" Active="No"/>
+  <Project Name="arduino" Path="Arduino/arduino.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="no">
       <Environment/>
@@ -26,8 +31,8 @@
       <Project Name="test_serial_sw" ConfigName="Debug"/>
       <Project Name="test_backlight" ConfigName="Debug"/>
       <Project Name="test_twi" ConfigName="Debug"/>
+      <Project Name="toueris2-hmi-firmware" ConfigName="Debug"/>
       <Project Name="Arduino" ConfigName="Debug"/>
-      <Project Name="toueris2-hmi" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Environment/>
@@ -40,8 +45,8 @@
       <Project Name="test_serial_sw" ConfigName="Release"/>
       <Project Name="test_backlight" ConfigName="Release"/>
       <Project Name="test_twi" ConfigName="Release"/>
+      <Project Name="toueris2-hmi-firmware" ConfigName="Release"/>
       <Project Name="Arduino" ConfigName="Release"/>
-      <Project Name="toueris2-hmi" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>

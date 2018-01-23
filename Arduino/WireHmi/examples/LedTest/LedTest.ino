@@ -1,7 +1,8 @@
-// Toueris II IHM Led Test
+// WireHmi Led Test
 // by epsilonrt <https://github.com/epsilonrt>
 
-// Turn on each led, then turn off each led.
+// Reads, switch on, switch off and toggle all leds then turn on each led, 
+// then turn off each led.
 
 // Created 19 January 2018
 
@@ -10,15 +11,17 @@
 #include <WireHmi.h>
 #include <Toueris2Hmi.h>
 
-WireSlave slave (IHM_ID);
-WireLeds Led (&slave, LED_REG, LED_NB);
+//------------------------------------------------------------------------------
 const unsigned pause = 1000;
+WireSlave slave (TOUERIS2_HMI_SLAVE_ADDR);
+WireLeds Led (&slave, LED_REG, LED_NB);
 
 void setup() {
 
   Serial.begin (500000);
-  Wire.begin(); // join i2c bus (address optional for master)
+  Wire.begin();
   Led.begin();
+  Serial.println("WireLeds Class Test");
 }
 
 void verify (int i) {

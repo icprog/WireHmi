@@ -11,14 +11,12 @@
  * knowledge of the CeCILL license and that you accept its terms.
  *
  * @file
- * @brief
+ * @brief Description de l'interface homme-machine du projet Toueris II
  */
 #ifndef __TOUERIS2_HMI_H__
 #define __TOUERIS2_HMI_H__
 
-//------------------------------------------------------------------------------
-// IHM Toueris II
-#define IHM_ID 0b0111111
+#define TOUERIS2_HMI_SLAVE_ADDR 0b0111111
 
 #define LED_REG 0
 #define LED_NB  3
@@ -37,5 +35,20 @@
 #define BUT_RIGHT   4
 #define BUT_CENTER  5
 
+#if defined(__cplusplus)
+// -----------------------------------------------------------------------------
+#include <WireHmi.h>
+
+// Toueris II Hmi
+class Toueris2Hmi : public  WireSlave {
+  public:
+    Toueris2Hmi (int hirqPin = -1, byte slaveAddress = TOUERIS2_HMI_SLAVE_ADDR);
+    void begin();
+    WireLeds led;
+    WireKeyboard keyb;
+    WireBackLight backlight;
+};
+// -----------------------------------------------------------------------------
+#endif // defined(__cplusplus)
 /* ========================================================================== */
 #endif /* __TOUERIS2_HMI_H__ */
