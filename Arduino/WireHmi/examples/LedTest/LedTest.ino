@@ -13,15 +13,29 @@
 
 //------------------------------------------------------------------------------
 const unsigned pause = 1000;
+const int ledPin = 13;
+
 WireSlave slave (TOUERIS2_HMI_SLAVE_ADDR);
 WireLeds Led (&slave, LED_REG, LED_NB);
 
 void setup() {
 
   Serial.begin (500000);
+  Serial.println("WireLeds Class Test");
+
+  pinMode (ledPin, OUTPUT);
+  for (byte j = 0; j < 3; j++) {
+
+    digitalWrite (ledPin, 1);
+    delay (200);
+    digitalWrite (ledPin, 0);
+    delay (200);
+  }
+  digitalWrite (ledPin, 1);
+  delay (2000);
   Wire.begin();
   Led.begin();
-  Serial.println("WireLeds Class Test");
+  digitalWrite (ledPin, 0);
 }
 
 void verify (int i) {

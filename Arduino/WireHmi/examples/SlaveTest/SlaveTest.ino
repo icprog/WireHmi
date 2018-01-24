@@ -14,13 +14,26 @@
 #define RAMSIZE     256
 
 //------------------------------------------------------------------------------
+const int ledPin = 13;
+
 WireSlave ram (0xA0 >> 1);
 
 void setup() {
 
   Serial.begin (500000);
-  Wire.begin();
   Serial.println("WireSlave Class Test");
+  pinMode (ledPin, OUTPUT);
+  for (byte j = 0; j < 3; j++) {
+
+    digitalWrite (ledPin, 1);
+    delay (200);
+    digitalWrite (ledPin, 0);
+    delay (200);
+  }
+  digitalWrite (ledPin, 1);
+  delay (2000);
+  Wire.begin();
+  digitalWrite (ledPin, 0);
 }
 
 void loop() {
