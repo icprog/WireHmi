@@ -33,23 +33,25 @@ void vWaitUntilI2cBusy (void);
 // -----------------------------------------------------------------------------
 void
 vHmiInit (void) {
-
+  xLedMask led;
   MCUSR = 0;  // Permet de dévalider le watch-dog en cas de reset watch-dog
+
   wdt_disable();  // Evite un déclenchement watch-dog pendant Init
 
   vLedInit();
-
   vHmiHirqInit();
   if (MCUSR & _BV (WDRF)) {
 
     // Reset déclenché par Watchdog
     cli();
     vHmiHirqClear();
+    led = LED_RED;
   }
   else {
 
-    vHmiHirqSet(); // Active HIRQ pour indiquer que l'init est en cours
+    led = LED_GREEN;
   }
+  vLedSet (led);
 
   if (iEepromLoadBlock (&xConfig, &xConfigEE, sizeof (xHmiConfig)) < 0) {
 
@@ -67,6 +69,15 @@ vHmiInit (void) {
 
   vHmiHirqClear();
   MCUSR |= _BV (WDRF); // Clear du bit Watchdog Reset Flag
+
+  vLedClear (led);
+  // Signale fin init en faisant clignoter 3 fois, la led rouge si déclenchement
+  // watchdog, sinon la led verte
+  for (uint8_t j = 0; j < (3 * 2); j++) {
+
+    vLedToggle (led);
+    delay_ms (50);
+  }
   wdt_enable (CFG_IHM_WDT_TIMEOUT); // Sécurité en cas de blocage appli.
   sei(); // Valide les interruptions.
 }
@@ -170,10 +181,10 @@ eTwiSlaveTxCB (xQueue * pxTxPayload, eTwiStatus eStatus) {
   switch (eStatus) {
 
     case TWI_STATUS_LCALL:
-      // Adressage avec notre adresse esclave
-      // Premier octet demandé
+    // Adressage avec notre adresse esclave
+    // Premier octet demandé
 
-      // Pas de break, c'est normal !
+    // Pas de break, c'est normal !
 
     case TWI_STATUS_TXBUFFER_EMPTY:
       // Le buffer de transmission est vide, il faut ajouter des octets
