@@ -11,20 +11,22 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <errno.h>
+#include <avr/wdt.h>
 
 //------------------------------------------------------------------------------
 const unsigned pause = 1000;
 const int hirqPin = 2;
+const int ledPin = 13;
 
 Toueris2Hmi Hmi (hirqPin);
 char buffer[16];
 byte index = 0;
 
 void setup() {
+  MCUSR = 0;
+  wdt_disable();
 
   Serial.begin (500000);
-  Wire.begin();
-  Hmi.begin();
   Serial.println ("Toueris2Hmi Class Demo");
   Serial.println ("Available commands:");
   Serial.println (" bXXX:\t to set backlight to XXX (0-255)");
@@ -35,6 +37,20 @@ void setup() {
   Serial.println (" WX:\t write all leds (0-7)");
   Serial.println (" TX:\t toggle all leds (0-7)");
   Serial.println (" R:\t read all leds");
+  Serial.println (" K:\t RESET by watchdog");
+  pinMode (ledPin, OUTPUT);
+  for (byte j = 0; j < 3; j++) {
+
+    digitalWrite (ledPin, 1);
+    delay (200);
+    digitalWrite (ledPin, 0);
+    delay (200);
+  }
+  digitalWrite (ledPin, 1);
+  delay (2000);
+  Wire.begin();
+  Hmi.begin();
+  digitalWrite (ledPin, 0);
 }
 
 void verify (int i) {
@@ -90,6 +106,13 @@ void loop() {
 
       buffer[index] = 0;
       switch (buffer[0]) {
+        case 'K':
+        case 'k':
+          buffer[0] = 0;
+          index = 0;
+          wdt_enable (WDTO_15MS);
+          for (;;);
+          break;
         case 'b':
           if (str2byte (&buffer[1], &value)) {
             success = Hmi.backlight.write (value);
