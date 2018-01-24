@@ -67,11 +67,11 @@ EXTMEMOPTS =
 # !! You must change and enable the setting below to match your programmer !!
 
 # User
-AVRDUDE_PROGRAMMER = atmelice_isp
+#AVRDUDE_PROGRAMMER = atmelice_isp
 AVRDUDE_PORT = usb
 
 # AVR Dragon ISP
-#AVRDUDE_PROGRAMMER = dragon_isp
+AVRDUDE_PROGRAMMER = dragon_isp
 #AVRDUDE_PORT = usb
 
 # AVR Dragon JTAG
