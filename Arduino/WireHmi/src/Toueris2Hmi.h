@@ -13,8 +13,8 @@
  * @file
  * @brief Description de l'interface homme-machine du projet Toueris II
  */
-#ifndef __TOUERIS2_HMI_H__
-#define __TOUERIS2_HMI_H__
+#ifndef __TOUERIS2_HMI_PUBLIC_H__
+#define __TOUERIS2_HMI_PUBLIC_H__
 
 #define TOUERIS2_HMI_SLAVE_ADDR 0b0111111
 
@@ -51,4 +51,4 @@ class Toueris2Hmi : public  WireSlave {
 // -----------------------------------------------------------------------------
 #endif // defined(__cplusplus)
 /* ========================================================================== */
-#endif /* __TOUERIS2_HMI_H__ */
+#endif /* __TOUERIS2_HMI_PUBLIC_H__ */
