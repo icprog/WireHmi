@@ -23,6 +23,8 @@ char buffer[16];
 byte index = 0;
 
 void setup() {
+  int loops = 0;
+
   MCUSR = 0;
   wdt_disable();
 
@@ -38,19 +40,24 @@ void setup() {
   Serial.println (" TX:\t toggle all leds (0-7)");
   Serial.println (" R:\t read all leds");
   Serial.println (" K:\t RESET by watchdog");
+
+  // The LED is lit while waiting for the slave HMI
   pinMode (ledPin, OUTPUT);
-  for (byte j = 0; j < 3; j++) {
+  digitalWrite (ledPin, 1);
+  Wire.begin();
+  while (!Hmi.begin()) {
+    loops++; // One waiting loop per second
+  }
+  digitalWrite (ledPin, 0);
+
+  // The led flashes to inform the number of waiting loops
+  for (byte j = 0; j < loops; j++) {
 
     digitalWrite (ledPin, 1);
     delay (200);
     digitalWrite (ledPin, 0);
     delay (200);
   }
-  digitalWrite (ledPin, 1);
-  delay (2000);
-  Wire.begin();
-  Hmi.begin();
-  digitalWrite (ledPin, 0);
 }
 
 void verify (int i) {
@@ -194,6 +201,7 @@ void loop() {
           }
           break;
         default:
+          Serial.println ("\n>Invalid command !");
           break;
       }
       buffer[0] = 0;

@@ -30,10 +30,9 @@ Toueris2Hmi::Toueris2Hmi (int hirqPin, byte slaveAddress) :
 }
 
 // -----------------------------------------------------------------------------
-void Toueris2Hmi::begin() {
-  this->led.begin();
-  this->keyb.begin();
-  this->backlight.begin();
+bool Toueris2Hmi::begin() {
+  
+  return this->led.begin() && this->keyb.begin() && this->backlight.begin();
 }
 
 /* ========================================================================== */

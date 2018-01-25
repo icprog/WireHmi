@@ -43,7 +43,7 @@
 class Toueris2Hmi : public  WireSlave {
   public:
     Toueris2Hmi (int hirqPin = -1, byte slaveAddress = TOUERIS2_HMI_SLAVE_ADDR);
-    void begin();
+    bool begin();
     WireLeds led;
     WireKeyboard keyb;
     WireBackLight backlight;

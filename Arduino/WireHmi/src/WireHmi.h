@@ -44,12 +44,15 @@ class WireSlave {
 // I2c Data Register Class
 class WireRegister {
   public:
-    WireRegister (WireSlave * slave, byte regAddress);
+    enum Mode { Read = 1, Write = 2, ReadWrite = Read + Write };
+    WireRegister (WireSlave * slave, byte regAddress, Mode mode = ReadWrite);
+    bool begin();
     byte read();
     bool write (byte value);
   private:
     WireSlave * _slave;
     byte _reg;
+    Mode _mode;
 };
 
 // Leds Class

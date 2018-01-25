@@ -95,19 +95,34 @@ bool WireSlave::write (byte value) {
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
-WireRegister::WireRegister (WireSlave * slave, byte regAddress) :
-  _slave (slave), _reg (regAddress) {
+WireRegister::WireRegister (WireSlave * slave, byte regAddress, WireRegister::Mode mode) :
+  _slave (slave), _reg (regAddress), _mode (mode) {
 
+}
+
+// -----------------------------------------------------------------------------
+bool WireRegister::begin() {
+  if (_mode & Read) {
+    byte data, timeout = 10;
+    byte count;
+
+    while ( (timeout--) && (count = _slave->read (_reg, &data, 1))) {
+      delay (100);;
+    }
+    return (count == 1);
+
+  }
+  return true;
 }
 
 // -----------------------------------------------------------------------------
 byte WireRegister::read() {
-  return _slave->read (_reg);
+  return (_mode & Read ? _slave->read (_reg) : 0);
 }
 
 // -----------------------------------------------------------------------------
 bool WireRegister::write (byte value) {
-  return _slave->write (_reg, value);
+  return (_mode & Write ? _slave->write (_reg, value) : false);
 }
 
 // -----------------------------------------------------------------------------
@@ -124,7 +139,11 @@ WireLeds::WireLeds (WireSlave * slave, byte regAddress, byte size) :
 // -----------------------------------------------------------------------------
 bool WireLeds::begin() {
 
-  return this->write (_leds);
+  if (WireRegister::begin()) {
+
+    return this->write (_leds);
+  }
+  return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -202,10 +221,15 @@ WireKeyboard::WireKeyboard (WireSlave * slave, byte regAddress, int hirqPin)  :
 
 // -----------------------------------------------------------------------------
 bool WireKeyboard::begin() {
-  if (_hirq > 0) {
-    pinMode (_hirq, INPUT);
+
+  if (WireRegister::begin()) {
+
+    if (_hirq > 0) {
+      pinMode (_hirq, INPUT);
+    }
+    return true;
   }
-  return true;
+  return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -234,7 +258,7 @@ WireBackLight::WireBackLight (WireSlave * slave, byte regAddress)  :
 // -----------------------------------------------------------------------------
 bool WireBackLight::begin() {
 
-  return true;
+  return WireRegister::begin();
 }
 
 /* ========================================================================== */

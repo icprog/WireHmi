@@ -1,7 +1,7 @@
 // WireHmi Led Test
 // by epsilonrt <https://github.com/epsilonrt>
 
-// Reads, switch on, switch off and toggle all leds then turn on each led, 
+// Reads, switch on, switch off and toggle all leds then turn on each led,
 // then turn off each led.
 
 // Created 19 January 2018
@@ -19,23 +19,28 @@ WireSlave slave (TOUERIS2_HMI_SLAVE_ADDR);
 WireLeds Led (&slave, LED_REG, LED_NB);
 
 void setup() {
+  int loops = 0;
 
   Serial.begin (500000);
-  Serial.println("WireLeds Class Test");
+  Serial.println ("WireLeds Class Test");
 
+  // The LED is lit while waiting for the slave HMI
   pinMode (ledPin, OUTPUT);
-  for (byte j = 0; j < 3; j++) {
+  digitalWrite (ledPin, 1);
+  Wire.begin();
+  while (!Led.begin()) {
+    loops++; // One waiting loop per second
+  }
+  digitalWrite (ledPin, 0);
+  
+  // The led flashes to inform the number of waiting loops
+  for (byte j = 0; j < loops; j++) {
 
     digitalWrite (ledPin, 1);
     delay (200);
     digitalWrite (ledPin, 0);
     delay (200);
   }
-  digitalWrite (ledPin, 1);
-  delay (2000);
-  Wire.begin();
-  Led.begin();
-  digitalWrite (ledPin, 0);
 }
 
 void verify (int i) {
@@ -80,7 +85,7 @@ void loop() {
   delay (pause);
 
   Serial.print ("writeAll>0x");
-  b1 = Led.writeAll(0);
+  b1 = Led.writeAll (0);
   all = Led.readAll();
   Serial.print (all, HEX);
   verify (b1 & (all == 0));
@@ -126,6 +131,6 @@ void loop() {
     delay (pause);
   }
 
-  delay (pause*3);
+  delay (pause * 3);
 }
 //------------------------------------------------------------------------------

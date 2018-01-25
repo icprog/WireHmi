@@ -18,22 +18,28 @@ WireSlave slave (TOUERIS2_HMI_SLAVE_ADDR);
 WireBackLight Backlight (&slave, BACKLIGHT_REG);
 
 void setup() {
+  int loops = 0;
 
   Serial.begin (500000);
   Serial.println("WireBackLight Class Test");
+  
+  // The LED is lit while waiting for the slave HMI
   pinMode (ledPin, OUTPUT);
-  for (byte j = 0; j < 3; j++) {
+  digitalWrite (ledPin, 1);
+  Wire.begin();
+  while (!Backlight.begin()) {
+    loops++; // One waiting loop per second
+  }
+  digitalWrite (ledPin, 0);
+  
+  // The led flashes to inform the number of waiting loops
+  for (byte j = 0; j < loops; j++) {
 
     digitalWrite (ledPin, 1);
     delay (200);
     digitalWrite (ledPin, 0);
     delay (200);
   }
-  digitalWrite (ledPin, 1);
-  delay (2000);
-  Wire.begin();
-  Backlight.begin();
-  digitalWrite (ledPin, 0);
 }
 
 void loop() {
