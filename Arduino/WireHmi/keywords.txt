@@ -1,5 +1,5 @@
 #######################################
-# Syntax Coloring Map For AD7124 Library
+# Syntax Coloring Map For WireHmi Library
 #######################################
 
 #######################################
@@ -43,3 +43,6 @@ backlight	KEYWORD2
 #######################################
 # Constants (LITERAL1)
 #######################################
+Read	LITERAL1
+Write	LITERAL1
+ReadWrite	LITERAL1
