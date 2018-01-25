@@ -23,6 +23,7 @@ xHmiConfigEE xConfigEE EEMEM;
 /* private variables ======================================================== */
 static uint8_t ucI2cBuffer[2];
 static volatile uint8_t ucBufferIdx; // Index sur buffer I2c
+static uint8_t ucPreviousBacklight;
 
 /* private functions ======================================================== */
 void vAssert (bool bTest);
@@ -63,6 +64,8 @@ vHmiInit (void) {
 
   vHmiButtonInit();
   vHmiBacklightInit();
+  vHmiBacklightSet (xConfig.ucBacklight);
+  ucPreviousBacklight = xConfig.ucBacklight;
 
   vTwiInit ();
   vTwiSetDeviceAddress (TOUERIS2_HMI_SLAVE_ADDR << 1);
@@ -87,6 +90,12 @@ void
 vHmiLoop (void) {
 
   vHmiButtonTask();
+  if (ucPreviousBacklight != xConfig.ucBacklight) {
+    
+    vHmiBacklightSet (xConfig.ucBacklight);
+    ucPreviousBacklight = xConfig.ucBacklight;
+    vEepromSaveBlock (&xConfig, &xConfigEE, sizeof (xHmiConfig));
+  }
   wdt_reset();
 }
 
@@ -144,8 +153,8 @@ eTwiSlaveRxCB (xQueue * pxRxPayload, eTwiStatus eStatus) {
 
             case BACKLIGHT_REG:
               if (value != ucI2cBuffer[ucBufferIdx]) {
-                vHmiBacklightSet (value);
                 ucI2cBuffer[ucBufferIdx] = value;
+                xConfig.ucBacklight = value;
               }
               break;
 
