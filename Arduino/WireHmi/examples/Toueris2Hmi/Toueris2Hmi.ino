@@ -126,6 +126,9 @@ void loop() {
             read_value = Hmi.backlight.read();
             verify (success & (read_value == value));
           }
+          else {
+            verify (false);
+          }
           break;
         case 's':
           if (str2byte (&buffer[1], &value)) {
@@ -136,6 +139,12 @@ void loop() {
               read_value = Hmi.led.get (value);
               verify (success & (read_value == true));
             }
+            else {
+              verify (false);
+            }
+          }
+          else {
+            verify (false);
           }
           break;
         case 'c':
@@ -147,6 +156,12 @@ void loop() {
               read_value = Hmi.led.get (value);
               verify (success & (read_value == false));
             }
+            else {
+              verify (false);
+            }
+          }
+          else {
+            verify (false);
           }
           break;
         case 't':
@@ -157,6 +172,12 @@ void loop() {
               success = Hmi.led.toggle (value);
               verify (success);
             }
+            else {
+              verify (false);
+            }
+          }
+          else {
+            verify (false);
           }
           break;
         case 'T':
@@ -167,6 +188,12 @@ void loop() {
               success = Hmi.led.toggleAll (value);
               verify (success);
             }
+            else {
+              verify (false);
+            }
+          }
+          else {
+            verify (false);
           }
           break;
         case 'W':
@@ -178,6 +205,12 @@ void loop() {
               read_value = Hmi.led.readAll ();
               verify (success & (read_value == value));
             }
+            else {
+              verify (false);
+            }
+          }
+          else {
+            verify (false);
           }
           break;
         case 'R':
@@ -198,6 +231,12 @@ void loop() {
                 Serial.println ("\n>0");
               }
             }
+            else {
+              verify (false);
+            }
+          }
+          else {
+            verify (false);
           }
           break;
         default:
