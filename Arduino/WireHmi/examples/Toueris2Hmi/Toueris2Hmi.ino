@@ -47,6 +47,8 @@ void setup() {
   Wire.begin();
   while (!Hmi.begin()) {
     loops++; // One waiting loop per second
+    Serial.println ("Hmi.begin() failed ! check the connections to the HMI.");
+    delay(1000);
   }
   digitalWrite (ledPin, 0);
 
