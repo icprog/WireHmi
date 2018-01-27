@@ -28,7 +28,10 @@ void setup() {
   MCUSR = 0;
   wdt_disable();
 
-  Serial.begin (500000);
+  Serial.begin (38400);
+  while (!Serial) {
+    ; // wait for serial port to connect. Needed for native USB port only
+  }
   Serial.println ("Toueris2Hmi Class Demo");
   Serial.println ("Available commands:");
   Serial.println (" bXXX:\t to set backlight to XXX (0-255)");

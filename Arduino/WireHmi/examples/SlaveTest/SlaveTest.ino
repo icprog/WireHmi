@@ -20,7 +20,10 @@ WireSlave ram (0xA0 >> 1);
 
 void setup() {
 
-  Serial.begin (500000);
+  Serial.begin (38400);
+  while (!Serial) {
+    ; // wait for serial port to connect. Needed for native USB port only
+  }
   Serial.println("WireSlave Class Test");
   pinMode (ledPin, OUTPUT);
   for (byte j = 0; j < 3; j++) {

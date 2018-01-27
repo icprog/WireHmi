@@ -21,7 +21,10 @@ WireKeyboard Keyb (&slave, BUT_REG, hirqPin);
 void setup() {
   int loops = 0;
 
-  Serial.begin (500000);
+  Serial.begin (38400);
+  while (!Serial) {
+    ; // wait for serial port to connect. Needed for native USB port only
+  }
   Serial.println("WireKeyboard Class Test");
   
   // The LED is lit while waiting for the slave HMI
