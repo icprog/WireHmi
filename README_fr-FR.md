@@ -66,7 +66,7 @@ qui décrit le numéro du registre contrôlant le rétroéclairage (1)
 
 qui décrit le numéro du registre contrôlant les boutons poussoirs de navigation (2) et les bits correspondants à chaque boutons et celui indiquant s'il s'agit d'un appui ou d'un relachement.
 
-L'implémentation de la classe Toueris2Hmi est très concise (fichier [Toueris2Hmi.cpp](https://github.com/epsilonrt/WireHmi/blob/master/src/Toueris2Hmi.cpp) :
+L'implémentation de la classe Toueris2Hmi est très concise (fichier [Toueris2Hmi.cpp](https://github.com/epsilonrt/WireHmi/blob/master/src/Toueris2Hmi.cpp)) :
 
 		Toueris2Hmi::Toueris2Hmi (int hirqPin, byte slaveAddress) :
 			WireSlave (slaveAddress),
@@ -84,4 +84,4 @@ Le constructeur qui prend en paramètre le numéro de broche d'interruption (ind
 
 La fonction `begin()` quant à elle réalise un appel aux fonctions `begin()` de chacune des classes de composition et retourne une valeur booléenne qui correspond au ET logique de toutes les valeurs retournées.
 
-Le sketch [Toueris2Hmi.ino](https://github.com/epsilonrt/WireHmi/blob/master/examples/Toueris2Hmi/Toueris2Hmi.h) permet de voir un exemple complet d'utilisation de la classe Toueris2Hmi (Test de recette de l'IHM de Toueris).
+Le sketch [Toueris2Hmi.ino](https://github.com/epsilonrt/WireHmi/blob/master/examples/Toueris2Hmi/Toueris2Hmi.ino) permet de voir un exemple complet d'utilisation de la classe Toueris2Hmi (Test de recette de l'IHM de Toueris).

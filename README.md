@@ -66,7 +66,7 @@ which describes the number of the register controlling the backlight (1)
 
 which describes the number of the register controlling the navigation push buttons (2) and the bits corresponding to each button and the one indicating whether it is a press or a release.
 
-The implementation of the `Toueris2Hmi` class is very concise (file [Toueris2Hmi.cpp](https://github.com/epsilonrt/WireHmi/blob/master/src/Toueris2Hmi.cpp):
+The implementation of the `Toueris2Hmi` class is very concise (file [Toueris2Hmi.cpp](https://github.com/epsilonrt/WireHmi/blob/master/src/Toueris2Hmi.cpp)):
 
 		Toueris2Hmi::Toueris2Hmi (int hirqPin, byte slaveAddress) :
 			WireSlave (slaveAddress),
@@ -84,6 +84,6 @@ The constructor that takes parameter interrupt pin number (indicating that a pus
 
 The `begin()` function performs a call to the `begin()` functions of each of the composition classes and returns a Boolean value that corresponds to the logical AND of all returned values.
 
-The sketch [Toueris2Hmi.ino](https://github.com/epsilonrt/WireHmi/blob/master/examples/Toueris2Hmi/Toueris2Hmi.h) allows to see a complete example of use of the class `Toueris2Hmi` (Recipe test of the HMI of Toueris).
+The sketch [Toueris2Hmi.ino](https://github.com/epsilonrt/WireHmi/blob/master/examples/Toueris2Hmi/Toueris2Hmi.ino) allows to see a complete example of use of the class `Toueris2Hmi` (Recipe test of the HMI of Toueris).
 
 -------
