@@ -1,17 +1,18 @@
-/**
- * Copyright © 2018 epsilonRT. All rights reserved.
+/* Copyright © 2018 Pascal JEAN, All rights reserved.
+ * This file is part of the WireHmi Library.
  *
- * This software is governed by the CeCILL license under French law and
- * abiding by the rules of distribution of free software.  You can  use,
- * modify and/ or redistribute the software under the terms of the CeCILL
- * license as circulated by CEA, CNRS and INRIA at the following URL
- * <http://www.cecill.info>.
+ * The WireHmi Library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 3 of the License, or (at your option) any later version.
  *
- * The fact that you are presently reading this means that you have had
- * knowledge of the CeCILL license and that you accept its terms.
+ * The WireHmi Library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
  *
- * @file
- * @brief I2C Human2Machine Interface implementation
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with the WireHmi Library; if not, see <http://www.gnu.org/licenses/>.
  */
 #include "WireHmi.h"
 

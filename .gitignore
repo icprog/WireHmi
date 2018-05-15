@@ -11,5 +11,16 @@ compile_commands.json
 .clang
 .tern*
 doc/html
+*.LBK
+*.DBK
+*.EDF
+*.DO
+*.rte
+*.log
+*.SDF
+*.sts
+atmega1284p
+__avr_gdbinit
+version-git.h
+.*
 *.componentinfo.xml
-.vs/
