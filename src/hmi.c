@@ -50,7 +50,7 @@ vHmiInit (void) {
   }
   else {
 
-    led = LED_GREEN;
+    led = LED_GREEN1;
   }
   vLedSet (led);
 
@@ -91,7 +91,7 @@ vHmiLoop (void) {
 
   vHmiButtonTask();
   if (ucPreviousBacklight != xConfig.ucBacklight) {
-    
+
     vHmiBacklightSet (xConfig.ucBacklight);
     ucPreviousBacklight = xConfig.ucBacklight;
     vEepromSaveBlock (&xConfig, &xConfigEE, sizeof (xHmiConfig));
@@ -143,7 +143,7 @@ eTwiSlaveRxCB (xQueue * pxRxPayload, eTwiStatus eStatus) {
           switch (ucBufferIdx) {
 
             case LED_REG:
-              value &= (LED1 | LED2 | LED3);
+              value &= (LED1 | LED2 | LED3 | LED4 | LED5);
               if (value != ucI2cBuffer[ucBufferIdx]) {
 
                 vHmiLedToggleAll (value ^ ucI2cBuffer[ucBufferIdx]);

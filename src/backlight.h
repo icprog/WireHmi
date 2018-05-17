@@ -15,25 +15,25 @@
 INLINE void
 vHmiBacklightInit (void) {
 
-  DDRD |= _BV (6);  /* PD6 (OC0A) en sortie */
+  DDRC |= _BV (6);  /* PC6 (OC3A) en sortie */
   /*
    * Mode PWM Phase correcte (1),
    * Clear OC on compare match
    * FCLK / 8
    * F = FCPU / (8 * 510) = 1.9 KHz pour 8 MHz
    */
-  TCCR0A = 0b10000001;
-  TCCR0B = 0b00000010;
+  TCCR3A = 0b10000001;
+  TCCR3B = 0b00000010;
 }
 
 /*
  * Modifie le niveau de rétroéclairage du LCD
- * @param ucValue niveau entre 0 et 63
+ * @param ucValue niveau entre 0 et 255
  */
 INLINE void
 vHmiBacklightSet (uint8_t ucValue) {
 
-  OCR0A = ucValue;
+  OCR3AL = ucValue;
 }
 
 /* ========================================================================== */

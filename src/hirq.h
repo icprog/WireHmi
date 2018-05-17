@@ -6,7 +6,7 @@
 #  include <avrio/defs.h>
 #  include <avr/io.h>
 
-#define HIRQ  _BV(2)
+#define HIRQ  _BV(7)
 
 /* inline public functions ================================================== */
   
@@ -14,21 +14,21 @@
 INLINE void 
 vHmiHirqSet (void) {
 
-  PORTD |= HIRQ;
+  PORTC |= HIRQ;
 }
 
 // ---------------------------------------------------------------------------
 INLINE void 
 vHmiHirqClear (void) {
 
-  PORTD &= ~HIRQ;
+  PORTC &= ~HIRQ;
 }
 
 // ---------------------------------------------------------------------------
 INLINE void 
 vHmiHirqInit (void) {
 
-  DDRD |= HIRQ;
+  DDRC |= HIRQ;
   vHmiHirqClear();
 }
 

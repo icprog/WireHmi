@@ -20,7 +20,7 @@ AVRIOBRDDIR = $(PROJECT_TOPDIR)/board
 # MCU name
 ifeq ($(MCU),)
 # !! You must change the following setting to match your target board !!
-MCU = atmega328p
+MCU = atmega32u4
 endif
 
 # Processor frequency.
@@ -43,7 +43,7 @@ endif
 #         F_CPU = 20000000
 ifeq ($(F_CPU),)
 # !! You must change the following setting to match your target board !!
-F_CPU = 8000000
+F_CPU = 16000000
 endif
 
 #---------------- External Memory Options ----------------
@@ -71,11 +71,11 @@ EXTMEMOPTS =
 AVRDUDE_PORT = usb
 
 # AVR Dragon ISP
-AVRDUDE_PROGRAMMER = dragon_isp
+#AVRDUDE_PROGRAMMER = dragon_isp
 #AVRDUDE_PORT = usb
 
 # AVR Dragon JTAG
-#AVRDUDE_PROGRAMMER = dragon_jtag
+AVRDUDE_PROGRAMMER = dragon_jtag
 #AVRDUDE_PORT = usb
 
 # JTAG ICE MkII
@@ -93,9 +93,9 @@ AVRDUDE_PROGRAMMER = dragon_isp
 
 # Fuses and lock for fuse target
 # !! You may change the following setting to match your target board !!
-#AVRDUDE_LFUSE = 0xD2
-#AVRDUDE_HFUSE = 0xD9
-#AVRDUDE_EFUSE = 0x01
+AVRDUDE_LFUSE = 0xFF
+AVRDUDE_HFUSE = 0x98
+AVRDUDE_EFUSE = 0xCB
 #AVRDUDE_LOCK  = 0xFF
 
 # Set the DEBUG_UI to either gdb or insight.

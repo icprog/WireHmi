@@ -19,10 +19,12 @@
 #define TOUERIS2_HMI_SLAVE_ADDR 0b0111111
 
 #define LED_REG 0
-#define LED_NB  3
+#define LED_NB  5
 #define LED1  (1<<0)
 #define LED2  (1<<1)
 #define LED3  (1<<2)
+#define LED4  (1<<3)
+#define LED5  (1<<4)
 
 #define BACKLIGHT_REG 1
 

@@ -12,7 +12,7 @@
 #define _CONFIG_H_
 
 /* constants ================================================================ */
-#define CFG_LCD_BACKLIGHT 0
+#define CFG_LCD_BACKLIGHT 8
 /*
  * Timeout Watch-Dog avant RESET
  *
