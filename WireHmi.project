@@ -1,5 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="WireHmi" InternalType="" Version="10.0.0">
+  <VirtualDirectory Name="examples">
+    <VirtualDirectory Name="Toueris2Hmi">
+      <VirtualDirectory Name="BacklightDemo">
+        <File Name="examples/Toueris2Hmi/BacklightDemo/BacklightDemo.ino"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="KeyboardDemo">
+        <File Name="examples/Toueris2Hmi/KeyboardDemo/KeyboardDemo.ino"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="LedDemo">
+        <File Name="examples/Toueris2Hmi/LedDemo/LedDemo.ino"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="FullTest">
+        <File Name="examples/Toueris2Hmi/FullTest/FullTest.ino"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="DevTest">
+      <VirtualDirectory Name="KeyboardTest">
+        <File Name="examples/DevTest/KeyboardTest/KeyboardTest.ino"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="SlaveTest">
+        <File Name="examples/DevTest/SlaveTest/SlaveTest.ino"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="BacklightTest">
+        <File Name="examples/DevTest/BacklightTest/BacklightTest.ino"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="LedTest">
+        <File Name="examples/DevTest/LedTest/LedTest.ino"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="WireHmi">
+    <File Name="src/WireHmi.h"/>
+    <File Name="README_fr-FR.md"/>
+    <File Name="README.md"/>
+    <File Name="library.properties"/>
+    <File Name="keywords.txt"/>
+    <File Name="AUTHORS"/>
+    <File Name="COPYING"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="src">
+    <File Name="src/Toueris2Hmi.h"/>
+    <File Name="src/Toueris2Hmi.cpp"/>
+    <File Name="src/WireHmi.cpp"/>
+  </VirtualDirectory>
   <Plugins>
     <Plugin Name="qmake">
       <![CDATA[00020001N0005Debug0000000000000001N0007Release000000000000]]>
@@ -26,37 +70,6 @@
  }]]]>
     </Plugin>
   </Plugins>
-  <VirtualDirectory Name="WireHmi">
-    <File Name="README_fr-FR.md"/>
-    <File Name="README.md"/>
-    <File Name="library.properties"/>
-    <File Name="COPYING"/>
-    <File Name="AUTHORS"/>
-    <VirtualDirectory Name="examples">
-      <VirtualDirectory Name="LedTest">
-        <File Name="examples/LedTest/LedTest.ino"/>
-      </VirtualDirectory>
-      <VirtualDirectory Name="SlaveTest">
-        <File Name="examples/SlaveTest/SlaveTest.ino"/>
-      </VirtualDirectory>
-      <VirtualDirectory Name="BacklightTest">
-        <File Name="examples/BacklightTest/BacklightTest.ino"/>
-      </VirtualDirectory>
-      <VirtualDirectory Name="KeyboardTest">
-        <File Name="examples/KeyboardTest/KeyboardTest.ino"/>
-      </VirtualDirectory>
-      <VirtualDirectory Name="Toueris2Hmi">
-        <File Name="examples/Toueris2Hmi/Toueris2Hmi.ino"/>
-      </VirtualDirectory>
-    </VirtualDirectory>
-    <VirtualDirectory Name="src">
-      <File Name="src/WireHmi.h"/>
-      <File Name="src/WireHmi.cpp"/>
-      <File Name="src/Toueris2Hmi.h"/>
-      <File Name="src/Toueris2Hmi.cpp"/>
-    </VirtualDirectory>
-    <File Name="keywords.txt"/>
-  </VirtualDirectory>
   <Description/>
   <Dependencies/>
   <Settings Type="Executable">
