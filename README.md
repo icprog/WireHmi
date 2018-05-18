@@ -16,7 +16,7 @@ The available modules are:
 
 Associated with a library for the management of the LCD like [LCD_ST7032](https://github.com/epsilonrt/LCD_ST7032), one has a complete toolbox to create any HMI.
 
-## Example of using an HMI (for the ** Toueris ** project)
+## Example of using an HMI (for the **Toueris** project)
 
 The human-machine interface of the MODBUS slave modules of the Toueris project has:
 
@@ -24,7 +24,7 @@ The human-machine interface of the MODBUS slave modules of the Toueris project h
 * a navigation pad with (4 directions + 1 push button) and
 * an LCD display with a backlight (based on ST7032)
 
-At the beginning of the file [Toueris2Hmi.h] (https://github.com/epsilonrt/WireHmi/blob/master/src/Toueris2Hmi.h), we see the definition of constants describing the hardware solution:
+At the beginning of the file [Toueris2Hmi.h](https://github.com/epsilonrt/WireHmi/blob/master/src/Toueris2Hmi.h), we see the definition of constants describing the hardware solution:
 
     #define LED1 0
     #define LED2 1
@@ -119,7 +119,7 @@ allows to modify the value of the backlight (between 0 and 255), as this value i
 
 bl = hmi.backlight.read ();
 
-## HMI creation example (for ** Toueris ** project)
+## HMI creation example (for **Toueris** project)
 
 This part is about developers who want to create a new interface. We take the case of the HMI Toueris.
 
@@ -131,14 +131,14 @@ which corresponds to the slave address of this HMI. This address is used by defa
 
 The modeling of the class that allows the control of this HMI is:
 
-		class Toueris2Hmi : public  WireSlave {
-			public:
-				Toueris2Hmi (int hirqPin = -1, byte slaveAddress = TOUERIS2_HMI_SLAVE_ADDR);
-				bool begin();
-				WireLeds led;
-				WireKeyboard keyb;
-				WireBackLight backlight;
-		};
+    class Toueris2Hmi : public  WireSlave {
+      public:
+        Toueris2Hmi (int hirqPin = -1, byte slaveAddress = TOUERIS2_HMI_SLAVE_ADDR);
+        bool begin();
+        WireLeds led;
+        WireKeyboard keyb;
+        WireBackLight backlight;
+    };
 
 There are 3 modules: WireLeds (`led`), WireKeyboard (` keyb`) and WireBackLight (`backlight`) as well as 2 functions: the` Toueris2Hmi()` constructor and the` begin()` function.
 
@@ -164,10 +164,10 @@ corresponds to the numbers of leds.
 The constructor takes in parameter the pin number indicating that a key can be read and possibly the address of our HMI.
 This constructor confines itself to making calls to the constructors of the original WireSlave class and to the constructors of the constituent classes the interface with the previously defined constants.
 
-		bool Toueris2Hmi::begin() {
-			
-			return this->led.begin() && this->keyb.begin() && this->backlight.begin();
-		}
+    bool Toueris2Hmi::begin() {
+      
+      return this->led.begin() && this->keyb.begin() && this->backlight.begin();
+    }
 
 The `begin()` function performs a call to the `begin()` functions of each of the composition classes and returns a Boolean value that corresponds to the logical AND of all returned values.
 

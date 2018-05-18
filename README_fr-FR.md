@@ -125,20 +125,20 @@ Cette partie concerne les développeurs qui veulent créer une nouvelle interfac
 
 En début de fichier [Toueris2Hmi.h](https://github.com/epsilonrt/WireHmi/blob/master/src/Toueris2Hmi.h), on voit:
 
-		#define TOUERIS2_HMI_SLAVE_ADDR 0b0111111
+    #define TOUERIS2_HMI_SLAVE_ADDR 0b0111111
 
 qui correspond à l'adresse esclave de cette IHM. Cette adresse est utilisée par défaut par le constructeur de la classe, il ne sera donc pas nécessaire de la fournir lors de l'appel.
 
 La modélisation de la classe qui permet le contrôle de cette IHM est :
 
-		class Toueris2Hmi : public  WireSlave {
-			public:
-				Toueris2Hmi (int hirqPin = -1, byte slaveAddress = TOUERIS2_HMI_SLAVE_ADDR);
-				bool begin();
-				WireLeds led;
-				WireKeyboard keyb;
-				WireBackLight backlight;
-		};
+    class Toueris2Hmi : public  WireSlave {
+      public:
+        Toueris2Hmi (int hirqPin = -1, byte slaveAddress = TOUERIS2_HMI_SLAVE_ADDR);
+        bool begin();
+        WireLeds led;
+        WireKeyboard keyb;
+        WireBackLight backlight;
+    };
 
 On y retrouve les 3 modules : WireLeds (`led`), WireKeyboard (`keyb`) et WireBackLight (`backlight`) ainsi que 2 fonctions: le constructeur `Toueris2Hmi()` et la fonction `begin()`.
 
@@ -164,10 +164,10 @@ correspond aux nombres de leds.
 Le constructeur prend en paramètre le numéro de broche indiquant qu'une touche peut être lue et éventuellement l'adresse de notre IHM. 
 Ce constructeur se cantonne à faire des appels aux constructeurs de la classe d'origine WireSlave et aux constructeurs des classes constituants l'interface avec les constantes définies précédement.
 
-		bool Toueris2Hmi::begin() {
-			
-			return this->led.begin() && this->keyb.begin() && this->backlight.begin();
-		}
+    bool Toueris2Hmi::begin() {
+      
+      return this->led.begin() && this->keyb.begin() && this->backlight.begin();
+    }
 
 La fonction `begin()` quant à elle réalise un appel aux fonctions `begin()` de chacune des classes de composition et retourne une valeur booléenne qui correspond au ET logique de toutes les valeurs retournées.
 
