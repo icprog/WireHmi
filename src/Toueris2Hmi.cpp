@@ -21,12 +21,17 @@
 //                            Toueris2Hmi class
 //
 // -----------------------------------------------------------------------------
+#define LED_REG       0
+#define BACKLIGHT_REG 1
+#define KEY_REG       2
+#define LED_NB        5
+#define KEY_RELEASE   (1<<7)
 
 // -----------------------------------------------------------------------------
 Toueris2Hmi::Toueris2Hmi (int hirqPin, byte slaveAddress) :
   WireSlave (slaveAddress),
   led (this, LED_REG, LED_NB),
-  keyb (this, BUT_REG, hirqPin),
+  keyb (this, KEY_REG, hirqPin),
   backlight (this, BACKLIGHT_REG) {
 }
 
